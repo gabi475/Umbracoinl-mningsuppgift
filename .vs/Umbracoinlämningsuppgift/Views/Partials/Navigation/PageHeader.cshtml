@@ -1,0 +1,57 @@
+﻿@inherits UmbracoViewPage
+
+@{
+    var name = Model.HasValue("name") ? Model.Value("name") : Model.ProductName;
+    var description = Model.HasValue("description") ? Model.Value<string>("description") : "";
+    var image = Model.Value<IPublishedContent>("photos", fallback: Fallback.ToAncestors);
+
+    string smallImageUrl = "";
+    string imageUrl = "";
+    if (image != null)
+    {
+        smallImageUrl = image.GetCropUrl("PageHeader.Tiny");
+        imageUrl = image.GetCropUrl("PageHeader.Large");
+    }
+
+    var productName = Model.HasProperty("productName") && Model.HasValue("productName") ? Model.Value<string>("productName") : "";
+    
+
+    
+}
+
+<!-- Page Header -->
+<header class="masthead lazyload" data-bg="@(!string.IsNullOrWhiteSpace(imageUrl) ? imageUrl : null)" style="@(!string.IsNullOrWhiteSpace(smallImageUrl) ? "background-image: url('" + smallImageUrl +"')" : null)">
+    <div class="overlay"></div>
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-md-10 mx-auto">
+                <div class="site-heading">
+                    <h1>@productname</h1>
+                    @if (!string.IsNullOrWhiteSpace(description))
+                    {
+                        if (productName)
+                        {
+                            <h2 class="subheading">@description</h2>
+                        }
+                        else
+                        {
+                            <span class="subheading">@description</span>
+                        }
+                    }
+
+                    @if (productName)
+                    {
+                        <span class="meta">
+                            Posted 
+                            @if (!string.IsNullOrWhiteSpace(productName))
+                            {
+                                @Html.Raw("by ") @productName
+                            }
+                            
+                        </span>
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+</header>

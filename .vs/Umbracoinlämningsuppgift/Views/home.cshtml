@@ -1,0 +1,37 @@
+﻿@inherits Umbraco.Web.Mvc.UmbracoViewPage<ContentModels.Home>
+@using ContentModels = Umbraco.Web.PublishedModels;
+@{
+    Layout = "master.cshtml";
+    var backgroundImage = Model.HeroBackgroundImage != null ? Model.HeroBackgroundImage.Url : String.Empty;
+}
+<section class="section section--full-height background-image-full overlay overlay--dark section--content-center section--thick-border"
+         style="background-image: url('@backgroundImage')">
+    <div class="section__hero-content">
+        <h1>@Model.HeroHeader</h1>
+        <h1>@Model.AddLink</h1>
+
+
+
+    </div>
+</section>
+
+<section class="section section">
+    @Html.GetGridHtml(Model, "bodyText", "bootstrap3-fluid")
+</section>
+
+
+<section class="section section--themed">
+
+    <div class="container">
+        <div class="row">
+
+            <div class="ta-center">
+                <h2>@Model.FooterHeader</h2>
+               
+
+            </div>
+
+        </div>
+    </div>
+
+</section>
